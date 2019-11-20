@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"node ./webhook.js"
+    "node webhook":"node ./webhook.js"
   },
   "keywords": [],
   "author": "",
