@@ -12,19 +12,19 @@ let server = http.createServer(function (req, res) {
     console.log(req.method, req.url);
     if (req.method == 'POST' && req.url == '/webhook') {
         //拿到github传递过来的参数--对请求的github进行简单的验证
-        let buffers = []
+        let buffers = [];
         req.on('data', function (buffer) {
-            buffers.push(buffer)
+            buffers.push(buffer);
         })
         req.on('end', function (buffer) {
-            let body = Buffer.concat(buffers)
+            let body = Buffer.concat(buffers);
             //github传的值请求事件类型：push事件
-            let event = req.header['x-github-event']
+            let event = req.header['x-github-event'];
             //github传递了请求体body,同时传递了签名，需要验证签名是否正确
-            let signatrue = req.headers['x-hub-signatrue']
+            let signatrue = req.headers['x-hub-signatrue'];
             if (signatrue !== sign(body)) {
                 //sign不相等 直接返回错误
-                return res.end('Not Allowed')
+                return res.end('Not Allowed');
             }
             //sign相同 执行同意请求
             //设置github请求的请求头，设置返回数据的格式为json
