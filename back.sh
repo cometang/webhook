@@ -1,7 +1,7 @@
 #!/bin/bash 
 #后端项目快速构建脚本
 #后端项目路径
-WORK_PATH = '/usr/projects/back'
+WORK_PATH='/usr/projects/back'
 cd $WORK_PATH
 echo "先清除老代码"
 git reset --hard origin/master
