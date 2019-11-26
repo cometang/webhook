@@ -19,7 +19,7 @@ let server = http.createServer(function (req, res) {
         req.on('end', function (buffer) {
             let body = Buffer.concat(buffers);
             //github传的值请求事件类型：push事件
-            let event = req.header['x-github-event'];
+            let event = req.headers['x-github-event'];
             //github传递了请求体body,同时传递了签名，需要验证签名是否正确
             let signatrue = req.headers['x-hub-signatrue'];
             if (signatrue !== sign(body)) {
