@@ -1,5 +1,7 @@
 let http = require('http');
 let cryto = require('crypto');
+let {spawn} = require('child_process'); //开启部署的子进程
+
 let SECRET = '123456';  //与在前后端项目github中设置的Secret相同
 //生成签名算法
 //根据SECRET字符串使用哈希算法生成十六进制的新的字符串
@@ -31,6 +33,27 @@ let server = http.createServer(function (req, res) {
             res.setHeader('Content-Type', 'application/json');
             //返回通知github请求已经成功
             res.end(JSON.stringify({ ok: true }));
+
+            //自动化部署
+            if(event == 'push'){
+                let payload = JSON.parse(body);
+                //开启子进程自动执行对应的sh部署脚本，提交back就执行 sh back.sh 的子进程
+                let child = spawn('sh',[`./${payload.repository.name}`])
+                //打印操作日志
+                //每当子进程有日志输入的时候，就抛出一个日志，最后一次性输出整个更改日志
+                let buffers = [] 
+                child.stdout.on('data',function(buffer){
+                    buffers.push(buffers)
+                })
+                child.stdout.on('end',function(buffer){
+                    let log = Buffer.concat(buffers)
+                    console.log(log)
+                })
+
+
+            }
+
+
         })
     } else {
         res.end('NOT Found');
