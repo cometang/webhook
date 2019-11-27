@@ -12,7 +12,7 @@ let server = http.createServer(function (req, res) {
     //判断github发送的是不是post 是不是webhook发送的请求
     console.log('检测到前端后端代码更新，github发来的请求信息如下：')
     console.log('req----hedaers')
-    console.log(req.headers)
+    console.log(req.headers['x-github-event'])
     console.log(req.method, req.url);
     if (req.method == 'POST' && req.url == '/webhook') {
         //拿到github传递过来的参数--对请求的github进行简单的验证
