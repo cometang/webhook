@@ -41,13 +41,14 @@ let server = http.createServer(function (req, res) {
                 let payload = JSON.parse(body);
                 console.log('------')
                 console.log(payload)
+                let name = './'+payload.repository.name
                 //开启子进程自动执行对应的sh部署脚本，提交back就执行 sh back.sh 的子进程
-                let child = spawn('sh',[`./${payload.repository.name}`])
+                let child = spawn('sh',name)
                 //打印操作日志
                 //每当子进程有日志输入的时候，就抛出一个日志，最后一次性输出整个更改日志
                 let buffers = [] 
                 child.stdout.on('data',function(buffer){
-                    buffers.push(buffers)
+                    buffers.push(buffer)
                 })
                 child.stdout.on('end',function(buffer){
                     let log = Buffer.concat(buffers)
