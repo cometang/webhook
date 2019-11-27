@@ -39,6 +39,8 @@ let server = http.createServer(function (req, res) {
             //自动化部署
             if(event == 'push'){
                 let payload = JSON.parse(body);
+                console.log('------')
+                console.log(payload)
                 //开启子进程自动执行对应的sh部署脚本，提交back就执行 sh back.sh 的子进程
                 let child = spawn('sh',[`./${payload.repository.name}`])
                 //打印操作日志
@@ -49,6 +51,7 @@ let server = http.createServer(function (req, res) {
                 })
                 child.stdout.on('end',function(buffer){
                     let log = Buffer.concat(buffers)
+                    console.log('log')
                     console.log(log)
                 })
 
